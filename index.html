@@ -4,13 +4,13 @@
     window.onload = () => {
         const secret = new URLSearchParams(window.location.search).get('secret') || 'empty';
         console.info(secret);
-        const hashedData = 'U2FsdGVkX1+7QB3qsATjGMZONsu7EFe3msjQjY75a4RK4DXiSeodS6diBZtHX8MwKsCtagfWYykbG8Er6/+kBXmXtEfYv1l/az60WeIyEdrp4Zteb8XnGVLthwzJGxE5M59NaLQEEJVgK8g/uDrf8qonHylImUsp2oQMxxThNm0XHmxfgZh6VrwBUlSajMzN1ODgbHCb1SffBvv/doulPxj/Z6L2Hxq4m+nV25oEJ9kFUUBV77BlEBi9eGNa83rDrQs0tEA1rJfFyaniwfw8Ak254aMed4+3FeZ0eF4WdAnSs51GCGa6OqdoURr3WbGswPuyqg9LqkrSW2hUsGwDTp0y44NUpt8vzgx273NYUZxYxNBEOlJJA0voI3keGluLoo0ou6kBFz/+hxB8Oqoc6aF0MQYiVryoIVi4Ah2c1MKQgHDppkHycTGzPGX7ojHP435FcE8TM2HS0IXC6Yjv7qyY0maQ9cPKsWJVgbC586a12Id/VTVLP29EYsrx99Qq1L9DTis20sZvo4K4QjofUg==';
-        const originData = JSON.parse(CryptoJS.AES.decrypt(hashedData, secret).toString(CryptoJS.enc.Utf8));
+        const hashedData = 'U2FsdGVkX18Wmb/Dxk3+P008cpqU8Q94mhorMCmcQeTxE+MAN521zLnWiNWUfAi/dUeXP1PwiKyKnI4WAt6XSFd31Ahua1Bj0sG4ArSWYRin7xlnW/5jQb6DGTac03SgczmOcSN+AUEyE9mYaQ5NdPJpw08YXa5i1xaXbKhdVZUwMYqSawJLGHU4V/MvtoDYz+3qIjEy9RCTq0FEcTiw2QsdAENVrexq+8lTEt8BY+kf5vNGAirV/rImjf8jHNPsbaSj2MTbrNqiSB1cFW3QLsYq1dmrGZbZafXIcMTuwFIUkd6FTUZnscSMEbX7zuKJNsB62chrlUL+7gG30nLDpI/WcSIr5mDeDvYHMNnX2lCZzD/AudoKjOJIeIF+9sS41OsCd4c/mTecSlxmA4Wj2upkmjJJajxG0DwFYj9fC5vIgXxATXxVzoXkaSdZByWnRSA3QBRNn8G+c3rWBaqFiKUNnWtrSR0cihA8jZKCpWMhgLWPo/UaoUd9KkORBRDPbyj8qGnQc11hBQN6Mu92zT77bRpr+TasEOW6DrnlWQSo4J2prNSyasqr6s+M9uqhbgi0599IK1zkLpgLmlwbuYt+oXG2XhSkY6Dew0P3zonSl9SRry0MOnp8mzxTlaRvWhCzbYQhH2VYzFr8EZPqxi56pI7aMKn7F6SKVif/yP6xARvgpSAjL+p3aZEytuTZiGGWhFmJBUAqo2UU/0PbAqmeVc4d7ydl/12u39BgQ3LY2X2iKVxXnMj35ZU64QPigiLASH4QDUUV+UFjYfLaoAkNHPjGfvVWTsVhLPK9R4E4xf+CwD/dv6ypkT3hYWigggWn4oSxFIQ+icUDFuHA6EjUzf1ywlgaVBuSK8J1xK4sYMmqdNuSaFl89aGtaFw/eretn+6KbxPdPjj7He0GkoBGhhWKywIlU1InYfc/IRdbWYAeT4Rq+zNXyOzIZiDkFj0GQ+2+dDorWhblgi2Sj35dybjIk1GlXzyRZVTXfPwjHYZDGSqcERdp1nd+kDSSuTXt+YWY5hzq49ykDdv+mDgFjyd9fyiKaYDFfRv1VnmC1T+Ku4rOsKSG+UAu+DHKKFUtBYsnL9o2Ij/4wOon6hh1rpRcnTj/C3WHL6sU2lYiNaW5qpFlLKOdq/l3zXZgnPWzuxDrs6PJHkfU4lEALWMdblWR6OdbCZ33kAz1yg8WFemlrKQWExGkICcqwfzx';
+        const originData = JSON.parse(CryptoJS.AES.decrypt(hashedData, secret).toString(CryptoJS.enc.Utf8)).reverse();
         document.querySelector('tbody').innerHTML = originData.map((data) => `
             <tr>
                 <td>${data.date}</td>
                 <td><a href="${data.problem_link}">${data.problem_name}</a></td>
-                <td>${data.problem_name}</td>
+                <td>${data.origin}</td>
                 <td>${data.difficulty}</td>
                 <td>${data.tags.join(', ')}</td>
                 <td>${data.note.trim().split('\n').map((line) => `<p>${line.trim()}</p>`).join('')}</td>
@@ -18,6 +18,9 @@
         `).join('');
     };
 </script>
+
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$']], displayMath: [['$$', '$$']]}});</script>
+<script src="https://yhx-12243.github.io/OI-transit/additional_files/MathJax-master/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 <style>
     body {
